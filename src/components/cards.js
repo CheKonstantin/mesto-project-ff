@@ -1,8 +1,9 @@
-function createCard(cardData, deleteCallback, cardContent) {
+function createCard(cardData, deleteCallback, cardContent, likeCallback) {
   const cardElement = cardContent.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   const cardBtnDelete = cardElement.querySelector('.card__delete-button');
   const cardTitle = cardElement.querySelector('.card__title');
+  const cardLikeBtn = cardElement.querySelector('.card__like-button');
 
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
@@ -11,22 +12,56 @@ function createCard(cardData, deleteCallback, cardContent) {
   cardBtnDelete.addEventListener('click', () => {
     deleteCallback(cardElement);
   });
+  cardBtnDelete.removeEventListener('click', () => {
+    deleteCallback(cardElement);
+  });
+
+  cardLikeBtn.addEventListener('click', (e) => {
+    likeCallback(cardLikeBtn);
+  });
 
   return cardElement;
+}
+
+function likeCard(btnItem) {
+  btnItem.classList.toggle('card__like-button_is-active');
+}
+
+function addNewCard(
+  form,
+  cardContent,
+  openModal,
+  imgModal,
+  parent,
+  likeCallback,
+) {
+  const newCardData = {
+    link: form.elements.link.value,
+    name: form.elements.placeName.value,
+  };
+  const newCardElement = createCard(newCardData, deleteCard, cardContent);
+  parent.prepend(newCardElement);
+
+  const newCardImg = newCardElement.querySelector('.card__image');
+  const newCardLikeBtn = newCardElement.querySelector('.card__like-button');
+  newCardImg.addEventListener('click', () => {
+    openModal(imgModal);
+  });
+  newCardImg.removeEventListener('click', () => {
+    openModal(imgModal);
+  });
+
+  newCardLikeBtn.addEventListener('click', () => {
+    // likeCallback(newCardLikeBtn);
+    console.log(newCardLikeBtn);
+  });
+
+  form.reset();
 }
 
 function deleteCard(cardElement) {
   cardElement.remove();
 }
 
-function createNewCard(content, formDomElement, parent) {
-  let cardData = {};
-  cardData.link = formDomElement.elements.link.value;
-  cardData.name = formDomElement.elements.placeName.value;
-  const cardElementnNew = createCard(cardData, deleteCard, content);
-  parent.prepend(cardElementnNew);
-  formDomElement.reset();
-}
-
-export { createCard, deleteCard, createNewCard };
+export { createCard, deleteCard, addNewCard, likeCard };
 

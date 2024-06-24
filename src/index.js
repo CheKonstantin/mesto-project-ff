@@ -1,5 +1,10 @@
 import './styles/index.css';
-import { createCard, deleteCard, createNewCard } from './components/cards';
+import {
+  createCard,
+  deleteCard,
+  addNewCard,
+  likeCard,
+} from './components/cards';
 import {
   openModal,
   closeModal,
@@ -52,7 +57,12 @@ const formEditDescription = formEdit.elements.description;
 const formNewCard = document.forms.newPlace;
 
 initialCards.forEach((cardData) => {
-  const cardElement = createCard(cardData, deleteCard, cardElementContent);
+  const cardElement = createCard(
+    cardData,
+    deleteCard,
+    cardElementContent,
+    likeCard,
+  );
   listCards.append(cardElement);
 });
 
@@ -70,8 +80,8 @@ btnEditProfile.addEventListener('click', () => {
   );
 });
 
-formEdit.addEventListener('submit', function (evt) {
-  evt.preventDefault();
+formEdit.addEventListener('submit', function (e) {
+  e.preventDefault();
   setProfile(
     formEditName,
     formEditDescription,
@@ -100,15 +110,24 @@ modals.forEach((modal) => {
   });
 });
 
-formNewCard.addEventListener('submit', (e) => {
-  e.preventDefault();
-  createNewCard(cardElementContent, formNewCard, listCards);
-});
-
 const cardImgs = document.querySelectorAll('.card__image');
 
 cardImgs.forEach((btn) => {
-  btn.addEventListener('click', (e) => {
+  btn.addEventListener('click', () => {
     openModal(imgModal);
   });
+});
+
+formNewCard.addEventListener('submit', (e) => {
+  e.preventDefault();
+  addNewCard(
+    formNewCard,
+    cardElementContent,
+    openModal,
+    imgModal,
+    listCards,
+    likeCard,
+  );
+
+  closeModal(formNewCard.closest('.popup'));
 });
