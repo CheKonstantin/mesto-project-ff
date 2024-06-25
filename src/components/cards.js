@@ -1,4 +1,10 @@
-function createCard(cardData, deleteCallback, cardContent, likeCallback) {
+function createCard(
+  cardData,
+  deleteCallback,
+  cardContent,
+  likeCallback,
+  imgModalCallback,
+) {
   const cardElement = cardContent.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   const cardBtnDelete = cardElement.querySelector('.card__delete-button');
@@ -20,6 +26,10 @@ function createCard(cardData, deleteCallback, cardContent, likeCallback) {
     likeCallback(cardLikeBtn);
   });
 
+  cardImage.addEventListener('click', () => {
+    imgModalCallback(cardImage, cardTitle, cardData);
+  });
+
   return cardElement;
 }
 
@@ -27,41 +37,9 @@ function likeCard(btnItem) {
   btnItem.classList.toggle('card__like-button_is-active');
 }
 
-function addNewCard(
-  form,
-  cardContent,
-  openModal,
-  imgModal,
-  parent,
-  likeCallback,
-) {
-  const newCardData = {
-    link: form.elements.link.value,
-    name: form.elements.placeName.value,
-  };
-  const newCardElement = createCard(newCardData, deleteCard, cardContent);
-  parent.prepend(newCardElement);
-
-  const newCardImg = newCardElement.querySelector('.card__image');
-  const newCardLikeBtn = newCardElement.querySelector('.card__like-button');
-  newCardImg.addEventListener('click', () => {
-    openModal(imgModal);
-  });
-  newCardImg.removeEventListener('click', () => {
-    openModal(imgModal);
-  });
-
-  newCardLikeBtn.addEventListener('click', () => {
-    // likeCallback(newCardLikeBtn);
-    console.log(newCardLikeBtn);
-  });
-
-  form.reset();
-}
-
 function deleteCard(cardElement) {
   cardElement.remove();
 }
 
-export { createCard, deleteCard, addNewCard, likeCard };
+export { createCard, deleteCard, likeCard };
 

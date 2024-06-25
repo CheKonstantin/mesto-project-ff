@@ -23,4 +23,10 @@ function setProfile(inputTitle, inputDescr, titleField, descrField) {
   descrField.textContent = inputDescr.value;
 }
 
-export { openModal, closeModal, editProfile, setProfile };
+function setModalImg(imgElem, text, data) {
+  imgElem.src = data.link;
+  imgElem.alt = data.name;
+  text.textContent = data.name;
+}
+
+export { openModal, closeModal, editProfile, setProfile, setModalImg };

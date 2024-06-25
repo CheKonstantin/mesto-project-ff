@@ -1,15 +1,11 @@
 import './styles/index.css';
-import {
-  createCard,
-  deleteCard,
-  addNewCard,
-  likeCard,
-} from './components/cards';
+import { createCard, deleteCard, likeCard } from './components/cards';
 import {
   openModal,
   closeModal,
   editProfile,
   setProfile,
+  setModalImg,
 } from './components/modal';
 
 const initialCards = [
@@ -45,10 +41,13 @@ const btnAddCard = document.querySelector('.profile__add-button');
 const btnEditProfile = document.querySelector('.profile__edit-button');
 const addCardModal = document.querySelector('.popup.popup_type_new-card');
 const editProfileModal = document.querySelector('.popup.popup_type_edit');
-const imgModal = document.querySelector('.popup.popup_type_image');
 const modals = document.querySelectorAll('.popup');
 const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
+
+const imgModal = document.querySelector('.popup.popup_type_image');
+const imgModalTagImg = imgModal.querySelector('.popup__image');
+const imgModalCaption = imgModal.querySelector('.popup__caption');
 
 const formEdit = document.forms.editProfile;
 const formEditName = formEdit.elements.name;
@@ -62,6 +61,7 @@ initialCards.forEach((cardData) => {
     deleteCard,
     cardElementContent,
     likeCard,
+    setModalImg,
   );
   listCards.append(cardElement);
 });
@@ -120,14 +120,24 @@ cardImgs.forEach((btn) => {
 
 formNewCard.addEventListener('submit', (e) => {
   e.preventDefault();
-  addNewCard(
-    formNewCard,
+  const cardData = {
+    link: formNewCard.elements.link.value,
+    name: formNewCard.elements.placeName.value,
+  };
+
+  const newCardElement = createCard(
+    cardData,
+    deleteCard,
     cardElementContent,
-    openModal,
-    imgModal,
-    listCards,
     likeCard,
   );
 
+  listCards.prepend(newCardElement);
+
+  const newCardImg = newCardElement.querySelector('.card__image');
+  newCardImg.addEventListener('click', () => {
+    openModal(imgModal);
+  });
+  formNewCard.reset();
   closeModal(formNewCard.closest('.popup'));
 });
