@@ -1,12 +1,14 @@
 function openModal(modal) {
-  modal.style.display = 'flex';
+  modal.classList.add('popup_is-opened');
+  modal.classList.remove('popup_is-animated');
   document.body.style.overflow = 'hidden';
   modal.removeEventListener('click', () => {
     openModal(modal);
   });
 }
 function closeModal(modal) {
-  modal.style.display = 'none';
+  modal.classList.remove('popup_is-opened');
+  modal.classList.add('popup_is-animated');
   document.body.style.overflow = '';
   modal.removeEventListener('click', () => {
     closeModal(modal);

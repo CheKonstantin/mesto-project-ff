@@ -1,5 +1,5 @@
 import './styles/index.css';
-import { createCard, deleteCard, likeCard } from './components/cards';
+import { createCard, deleteCard, likeCard } from './components/card';
 import {
   openModal,
   closeModal,
@@ -8,32 +8,7 @@ import {
   setModalImg,
 } from './components/modal';
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
+import { initialCards } from './components/cards';
 
 const cardElementContent = document.querySelector('#card-template').content;
 const listCards = document.querySelector('.places__list');
@@ -46,8 +21,6 @@ const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 
 const imgModal = document.querySelector('.popup.popup_type_image');
-const imgModalTagImg = imgModal.querySelector('.popup__image');
-const imgModalCaption = imgModal.querySelector('.popup__caption');
 
 const formEdit = document.forms.editProfile;
 const formEditName = formEdit.elements.name;
@@ -130,6 +103,7 @@ formNewCard.addEventListener('submit', (e) => {
     deleteCard,
     cardElementContent,
     likeCard,
+    setModalImg,
   );
 
   listCards.prepend(newCardElement);
