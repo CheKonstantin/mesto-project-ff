@@ -1,7 +1,3 @@
-const imgModal = document.querySelector('.popup.popup_type_image');
-const imgModalTagImg = imgModal.querySelector('.popup__image');
-const imgModalCaption = imgModal.querySelector('.popup__caption');
-
 function createCard(
   cardData,
   deleteCallback,
@@ -22,28 +18,21 @@ function createCard(
   cardBtnDelete.addEventListener('click', () => {
     deleteCallback(cardElement);
   });
-  cardBtnDelete.removeEventListener('click', () => {
-    deleteCallback(cardElement);
-  });
 
   cardLikeBtn.addEventListener('click', () => {
     likeCallback(cardLikeBtn);
   });
 
   cardImage.addEventListener('click', () => {
-    imgModalCallback(imgModalTagImg, imgModalCaption, cardData);
+    imgModalCallback(cardData);
+  });
+
+  cardImage.addEventListener('click', () => {
+    imgModalCallback(cardData);
   });
 
   return cardElement;
 }
 
-function likeCard(btnItem) {
-  btnItem.classList.toggle('card__like-button_is-active');
-}
-
-function deleteCard(cardElement) {
-  cardElement.remove();
-}
-
-export { createCard, deleteCard, likeCard };
+export { createCard };
 

@@ -1,12 +1,6 @@
 import './styles/index.css';
-import { createCard, deleteCard, likeCard } from './components/card';
-import {
-  openModal,
-  closeModal,
-  editProfile,
-  setProfile,
-  setModalImg,
-} from './components/modal';
+import { createCard } from './components/card';
+import { openModal, closeModal } from './components/modal';
 
 import { initialCards } from './components/cards';
 
@@ -20,7 +14,9 @@ const modals = document.querySelectorAll('.popup');
 const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 
-const imgModal = document.querySelector('.popup.popup_type_image');
+export const imgModal = document.querySelector('.popup.popup_type_image');
+export const imgModalTagImg = imgModal.querySelector('.popup__image');
+export const imgModalCaption = imgModal.querySelector('.popup__caption');
 
 const formEdit = document.forms.editProfile;
 const formEditName = formEdit.elements.name;
@@ -34,7 +30,7 @@ initialCards.forEach((cardData) => {
     deleteCard,
     cardElementContent,
     likeCard,
-    setModalImg,
+    setCardPopup,
   );
   listCards.append(cardElement);
 });
@@ -45,26 +41,19 @@ btnAddCard.addEventListener('click', () => {
 
 btnEditProfile.addEventListener('click', () => {
   openModal(editProfileModal);
-  editProfile(
-    formEditName,
-    formEditDescription,
-    profileName,
-    profileDescription,
-  );
+
+  formEditName.value = profileName.textContent;
+  formEditDescription.value = profileDescription.textContent;
 });
 
 formEdit.addEventListener('submit', function (e) {
   e.preventDefault();
-  setProfile(
-    formEditName,
-    formEditDescription,
-    profileName,
-    profileDescription,
-  );
+
+  profileName.textContent = formEditName.value;
+  profileDescription.textContent = formEditDescription.value;
+
   closeModal(formEdit.closest('.popup'));
 });
-
-formEdit.addEventListener('input', function () {});
 
 modals.forEach((modal) => {
   modal.addEventListener('click', (e) => {
@@ -74,20 +63,6 @@ modals.forEach((modal) => {
     ) {
       closeModal(modal);
     }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeModal(modal);
-    }
-  });
-});
-
-const cardImgs = document.querySelectorAll('.card__image');
-
-cardImgs.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    openModal(imgModal);
   });
 });
 
@@ -103,15 +78,25 @@ formNewCard.addEventListener('submit', (e) => {
     deleteCard,
     cardElementContent,
     likeCard,
-    setModalImg,
+    setCardPopup,
   );
 
   listCards.prepend(newCardElement);
-
-  const newCardImg = newCardElement.querySelector('.card__image');
-  newCardImg.addEventListener('click', () => {
-    openModal(imgModal);
-  });
   formNewCard.reset();
   closeModal(formNewCard.closest('.popup'));
 });
+
+function setCardPopup(data) {
+  imgModalTagImg.src = data.link;
+  imgModalTagImg.alt = data.name;
+  imgModalCaption.textContent = data.name;
+  openModal(imgModal);
+}
+
+function likeCard(btnItem) {
+  btnItem.classList.toggle('card__like-button_is-active');
+}
+
+function deleteCard(cardElement) {
+  cardElement.remove();
+}
