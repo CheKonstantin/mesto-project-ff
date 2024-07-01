@@ -1,5 +1,5 @@
 import './styles/index.css';
-import { createCard } from './components/card';
+import { createCard, likeCard, deleteCard } from './components/card';
 import { openModal, closeModal } from './components/modal';
 
 import { initialCards } from './components/cards';
@@ -91,12 +91,4 @@ function setCardPopup(data) {
   imgModalTagImg.alt = data.name;
   imgModalCaption.textContent = data.name;
   openModal(imgModal);
-}
-
-function likeCard(btnItem) {
-  btnItem.classList.toggle('card__like-button_is-active');
-}
-
-function deleteCard(cardElement) {
-  cardElement.remove();
 }

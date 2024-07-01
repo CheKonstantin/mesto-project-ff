@@ -27,12 +27,16 @@ function createCard(
     imgModalCallback(cardData);
   });
 
-  cardImage.addEventListener('click', () => {
-    imgModalCallback(cardData);
-  });
-
   return cardElement;
 }
 
-export { createCard };
+function deleteCard(cardElement) {
+  cardElement.remove();
+}
+
+function likeCard(btnItem) {
+  btnItem.classList.toggle('card__like-button_is-active');
+}
+
+export { createCard, likeCard, deleteCard };
 
