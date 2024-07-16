@@ -1,0 +1,6 @@
+.popup__form-field {
+  display: block;
+}
+.popup__form-field:has(.popup__form-field-error_show):not(:last-of-type) {
+  margin-bottom: 13px;
+}
