@@ -1,9 +1,11 @@
+import { fetchAddLikeCard, fetchDeleteLikeCard } from './api';
+
 function createCard(
   cardData,
-  deleteCallback,
+  deletePopupCallback,
   cardContent,
-  likeCallback,
   imgModalCallback,
+  personalId,
 ) {
   const cardElement = cardContent.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
@@ -15,28 +17,76 @@ function createCard(
   cardImage.alt = cardData.name;
   cardTitle.textContent = cardData.name;
 
-  cardBtnDelete.addEventListener('click', () => {
-    deleteCallback(cardElement);
+  //скрываю кнопку удаления если карточка не моя
+  if (personalId === cardData.owner._id) {
+    cardBtnDelete.addEventListener('click', () => {
+      //передаю колбэк для модального окна удаления карточки
+      deletePopupCallback(cardData, cardElement);
+    });
+  } else {
+    //удаляю карточку
+    cardBtnDelete.remove();
+  }
+
+  //установи кол-во лайков
+
+  const counterLikes = (likes) => {
+    cardLikeBtn.setAttribute('data-count-likes', likes);
+  };
+
+  counterLikes(cardData.likes.length);
+
+  //верни тру если айдишник массива likes, совпадает с моим
+
+  const myLikes = cardData.likes.some(({ _id }) => {
+    return _id === personalId;
   });
 
-  cardLikeBtn.addEventListener('click', () => {
-    likeCallback(cardLikeBtn);
+  //если тру установи активный класс для сердца
+
+  if (myLikes) {
+    cardLikeBtn.classList.add('card__like-button_is-active');
+  }
+
+  //установи слушатель по клику и вызови функцию likeCard
+
+  cardLikeBtn.addEventListener('click', function (e) {
+    likeCard(e.target, cardData, counterLikes);
   });
 
+  //установи слушатель по клику и вызови колбэк для функции setCardPopup
   cardImage.addEventListener('click', () => {
     imgModalCallback(cardData);
   });
 
+  //верни карточку
+
   return cardElement;
 }
 
-function deleteCard(cardElement) {
-  cardElement.remove();
+// функция установки лайка
+
+function likeCard(button, card, counter) {
+  if (button.classList.contains('card__like-button_is-active')) {
+    fetchDeleteLikeCard(card)
+      .then((data) => {
+        button.classList.remove('card__like-button_is-active');
+        counter(data.likes.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    fetchAddLikeCard(card)
+      .then((data) => {
+        counter(data.likes.length);
+        button.classList.add('card__like-button_is-active');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 
-function likeCard(btnItem) {
-  btnItem.classList.toggle('card__like-button_is-active');
-}
-
-export { createCard, likeCard, deleteCard };
+export { createCard };
 
