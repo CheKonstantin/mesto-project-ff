@@ -11,15 +11,12 @@ const config = {
 function fetchRequestCards() {
   return fetch(`${config.baseUrl}cards`, {
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 // запроси вывести данные профиля с сервера
@@ -27,15 +24,12 @@ function fetchRequestCards() {
 function fetchRequestProfile() {
   return fetch(`${config.baseUrl}users/me`, {
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 // запрос на обновление данных профиля с сервера
@@ -48,15 +42,12 @@ function fetchUpdateProfileData(objProfile) {
       name: objProfile.name,
       about: objProfile.about,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 // запрос на добавление карточки на сервер
@@ -69,15 +60,12 @@ function fetchAddNewCard(cardData) {
       name: cardData.name,
       link: cardData.link,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 // запрос на удаление карточки с сервера
@@ -86,15 +74,12 @@ function fetchRemoveCard(data) {
   return fetch(`${config.baseUrl}cards/${data._id}`, {
     method: 'DELETE',
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 // запрос на добавление лайка на сервере
@@ -103,15 +88,12 @@ function fetchAddLikeCard(cardData) {
   return fetch(`${config.baseUrl}cards/likes/${cardData._id}`, {
     method: 'PUT',
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 // запрос на удаление лайка с сервера
@@ -120,15 +102,12 @@ function fetchDeleteLikeCard(cardData) {
   return fetch(`${config.baseUrl}cards/likes/${cardData._id}`, {
     method: 'DELETE',
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 // запрос на обновление аватара с сервера
@@ -141,15 +120,13 @@ function fetchUpdateAvatarProfile(profile) {
     body: JSON.stringify({
       avatar: profile.avatar,
     }),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .catch((res) => {
-      return `Ошибка ${res.status}`;
-    });
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 export {

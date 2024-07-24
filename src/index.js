@@ -261,7 +261,6 @@ function setLoading(load, popup) {
 formEdit.addEventListener('submit', function (e) {
   e.preventDefault();
   updateServerProfileInfo();
-  closeModal(formEdit.closest('.popup'));
 });
 
 // оптравь форму для добавления карточки
@@ -281,7 +280,7 @@ deleteCardPopupForm.addEventListener('submit', function (e) {
 // оптравь форму для обновления аватара
 
 formUpdateAvatar.addEventListener('submit', function (e) {
-  updateAvatarOnServer(e, closeModal);
+  updateAvatarOnServer(e);
 });
 
 // по клику на аватар, очисти ошибки валидации, открой модалку
