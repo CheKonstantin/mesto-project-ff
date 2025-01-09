@@ -11,6 +11,8 @@ function closeModal(modal) {
 
 function closeByEscape(event) {
   if (event.key === 'Escape') {
+    console.log(event.key);
+    
     closeModal(document.querySelector('.popup_is-opened'));
   }
 }
