@@ -1,6 +1,31 @@
-# SPRINT_5,6,7 Проектная работа Mesto
+# Проектная работа "Mesto" в рамках курса от Яндекс.Практикум
 
-[Ссылка на репозиторий](https://github.com/CheKonstantin/mesto-project-ff.git)
+<img src="https://github.com/user-attachments/assets/daabc689-ae65-474e-9f0e-6a782d9b91b5" height="auto" width="48%"/>
+<img src="https://github.com/user-attachments/assets/2862c7c3-2358-49bc-b646-1c6a403b9ee9" height="auto" width="48%"/>
+<img src="https://github.com/user-attachments/assets/38b3c3c2-73e4-4925-b6a9-647b5d604ca0" height="auto" width="48%"/>
 
-[Ссылка на страницу](https://chekonstantin.github.io/mesto-project-ff/)
 
+## Цель бизнеса
+Создание приложения(фронт части) на js. Для демонстрации фото. Где можно запостить фото, удалить его или поставить лайк. С возможностью редактирования профиля. 
+
+## Стек
+JS, SCSS, HTML, Webpack
+
+## Цели разработки
+- Настроить Webpack
+- Реализовать функционал модальных окон
+- Реализовать функционал добавления, удаления и лайка карточки
+- Реализовать функционал редактирования профиля
+- Разработать "живую" валидацию всех форм при помощи rejex
+- Подключить интерфейс к API
+  
+## Ссылка
+[Посмотреть страницу](https://chekonstantin.github.io/mesto-project-ff/)
+
+```
+npm i
+```
+
+```
+npm run start
+```
