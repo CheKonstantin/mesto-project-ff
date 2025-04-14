@@ -22,10 +22,20 @@ JS, SCSS, HTML, Webpack
 ## Ссылка
 [Посмотреть страницу](https://chekonstantin.github.io/mesto-project-ff/)
 
+### Установка зависимостей
+
 ```
 npm i
 ```
 
+### Развернуть сервер разработки
+
 ```
-npm run start
+npm run dev
+```
+
+### Развернуть сервер продакшена
+
+```
+npm run build
 ```
